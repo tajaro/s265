@@ -15,19 +15,19 @@ This struct records current options.
 -1 indicates no option is selected 
 */
 typedef struct fmt_options {
-	/* -1 indicates feature is off */
+	/* 0 indicates feature is off */
 	int pgwdth;
 	/* Default is 0 */
 	int mrgn;
-	/* "on" == 0
-	   "off == -1 */
+	/* "off" == 0
+	   "on == 1 */
 	int fmt;
 } fmt_options;
 
 int main(int argc, char* argv[]) {
 	char buffer[BUFLEN];
-	char *p = buffer;
-	fmt_options options = {-1, 0, -1};
+	char temp[3];
+	fmt_options options = {0, 0, 0};
 
 	if (argc != 2) {
 		printf("Input file not specified\n");
@@ -42,19 +42,25 @@ int main(int argc, char* argv[]) {
 
 	while (fgets(buffer, sizeof(char)*BUFLEN, fp)) {
 		/* May not cover cases of ?fmt embedded in text */
-		if (*p == '?') {
+		if (buffer[0] == '?') {
 			//printf("FORMAT ME!\n");
 			if (strncmp(buffer, "?pgwdth", 7) == 0) {
+				printf("FOUND PGWDTH\n");
 				// Temp value
 				options.pgwdth = 20;
-				options.fmt = 0;
-				printf("FOUND PGWDTH\n");
+				options.fmt = 1;
 			} else if (strncmp(buffer, "?mrgn", 5) == 0) {
 				printf("FOUND MRGN\n");
-				// Implement Me!
-			} else if (strncmp(buffer, "?fmt", 4) == 0) {
-				printf("FOUND FMT\n");
-				// Implement Me!
+				// Temp value
+				options.mrgn = 20;
+			} else if (strncmp(buffer, "?fmt on", 7) == 0) {
+				printf("FOUND FMT ON\n");
+				// Temp value
+				options.fmt = 1;
+			} else if (strncmp(buffer, "?fmt off", 8) == 0) {
+				printf("FOUND FMT OFF\n");
+				// Temp value
+				options.fmt = 0;
 			}
 		}
 		printf("%s", buffer);
