@@ -50,52 +50,51 @@ int main(int argc, char* argv[]) {
 		make formatting easier*/
 		// fxn? void tokenize_line(char *line, char *words))
 		char *t;
-		t = strtok(line ,'?');
+		t = strtok(line ," ");
 		while (t != NULL) {
-			strncpy(words[num_words], t, MAX_WORD_LEN);
-			t = strtok(NULL, " ");	
+			//strncpy(words[num_words], t, MAX_WORD_LEN);
 	
 			// fxn? void update_options (fmt_options *options, char* word))
-			if (words[num_words][0] == '?') {
+			if (*t == '?') {
 				//printf("FORMAT ME!\n");
-				if (strncmp(words[num_words], "?pgwdth", 7) == 0) {
+				if (strncmp(t, "?pgwdth", 7) == 0) {
 					printf("FOUND PGWDTH\n");
-					// Temp value
-					options.pgwdth = 30;
+					t = strtok(NULL, " ");	
+					options.pgwdth = atoi(t);
+					//printf("%s %d", t, options.pgwdth);
 					options.fmt = 1;
-				} else if (strncmp(words[num_words], "?mrgn", 5) == 0) {
+				} else if (strncmp(t, "?mrgn", 5) == 0) {
 					printf("FOUND MRGN\n");
 					// Temp value
 					options.mrgn = 20;
-				} else if (strncmp(words[num_words], "?fmt on", 7) == 0) {
+				} else if (strncmp(t, "?fmt on", 7) == 0) {
 					printf("FOUND FMT ON\n");
 					// Temp value
 					options.fmt = 1;
-				} else if (strncmp(words[num_words], "?fmt off", 8) == 0) {
+				} else if (strncmp(t, "?fmt off", 8) == 0) {
 					printf("FOUND FMT OFF\n");
 					// Temp value
 					options.fmt = 0;
 				}
 			} else {
-
 				if (options.fmt == 1) {
-					num_chars += strlen(words[num_words]);
+					num_chars += strlen(t);
 					if (num_chars >= options.pgwdth) {
+						//printf("%d %d", num_chars, options.pgwdth);
 						printf("\n");
 						num_chars = 0;
 					}
-					printf("%s ", words[num_words]);
+					printf("%s ", t);
 				} else if (options.fmt == 0) {
 					// Implement me!
 					printf("FORMATTING IS OFF!\n");
 				}
 			}
 			
+			t = strtok(NULL, " ");	
 			num_words++;
 		} /* end of tokenization loop */			
 		
-		printf("%s", line);
-
 		/* reset words array before end of loop */
 		num_words = 0; 
 		
