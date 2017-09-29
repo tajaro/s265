@@ -70,8 +70,7 @@ int main(int argc, char* argv[]) {
 						num_chars = strlen(t);
 					}
 					
-					if ((num_chars-strlen(t)) == 0){
-					} else {
+					if ((num_chars-strlen(t)) != 0){
 						printf(" ");
 					}
 					num_chars++;
