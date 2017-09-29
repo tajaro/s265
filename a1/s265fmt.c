@@ -95,6 +95,10 @@ int main(int argc, char* argv[]) {
 		
 	}
 
+	if(options.fmt == 1) {
+		printf("\n");
+	}
+
 	fclose(fp);
 	return 0;
 }
