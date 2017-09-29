@@ -26,14 +26,14 @@ int fmt = 0;
 */
 int update_options(char* line, char* t) {
 	if (strncmp(t, "?pgwdth", 6) == 0){
-		t = strtok(NULL, " ");	
+		t = strtok(NULL, " \n");	
 		pgwdth = atoi(t);
 		fmt = 1;
 	} else if (strncmp(t, "?mrgn", 4) == 0) {
-		t = strtok(NULL, " ");	
+		t = strtok(NULL, " \n");	
 		mrgn = atoi(t);
 	} else if (strncmp(t, "?fmt", 3) == 0) {
-		t = strtok(NULL, " ");	
+		t = strtok(NULL, " \n");	
 		if (strncmp(t, "on", 2) == 0) {
 			fmt = 1;
 		} else if (strncmp(t, "off", 3) == 0) {
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 	
 		/* Need to tokenize to remove whitespace, improve '?' searching and
 		make formatting easier*/
-		t = strtok(line, " ");
+		t = strtok(line, " \n");
 		while (t != NULL) {
 			if (fmt == 0) {
 				if (*t == '?') {
@@ -78,39 +78,37 @@ int main(int argc, char* argv[]) {
 				}
 				printf("%s", t);
 				t = strtok(NULL, "\n");
-				/*
-				t = strtok(NULL, " ");
-				if ( !update_options(line, t) == 0 ) {
-					printf("?%s", t);
-				}
-				*/
 			} else if (fmt == 1) {
 				if (*t == '?') {
 					update_options(line, t);
-					t = strtok(NULL, " \n");	
-				} else {
-					/* if over page width, newline and word*/
-					if ((num_chars+strlen(t)+1) > pgwdth) {
-						printf("\n%s", t);
-						num_chars = strlen(t);
-					/* if not start of line*/
-					} else if (num_chars != 0) {
-						printf(" %s", t);
-						num_chars += strlen(t) + 1;
-					/* if start of line*/
-					} else if (num_chars == 0) {
-						printf("%s", t);
-						num_chars = strlen(t);
-					} else {
-						printf("Something is very wrong\n");
-					}
-					t = strtok(NULL, " \n");	
+					t = strtok(NULL, " \n");
+					continue;
 				}
+
+				/* if over page width, newline and word*/
+				if ((num_chars + strlen(t) + 1) > pgwdth) {
+					printf("\n%s", t);
+					num_chars = strlen(t);
+				/* if not start of line*/
+				} else if (num_chars != 0) {
+					printf(" %s", t);
+					num_chars += strlen(t) + 1;
+				/* if start of line*/
+				} else if (num_chars == 0) {
+					printf("%s", t);
+					num_chars = strlen(t);
+				} else {
+					printf("Something is very wrong\n");
+				}
+				t = strtok(NULL, " \n");	
+			}
 				
-			} /* end of tokenization loop */			
-		
+		} /* end of tokenization loop */			
+		if (fmt == 0) {
+			printf("\n");
 		}
 	}
+	
 
 	if(fmt == 1) {
 		printf("\n");
