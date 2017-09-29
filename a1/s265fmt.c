@@ -9,8 +9,6 @@ September 2017
 #include <string.h>
 
 #define MAX_LINE_LEN 100
-#define MAX_WORD_LEN 20
-#define MAX_WORDS 100
 
 /*
 This struct records current options.
@@ -28,8 +26,6 @@ typedef struct fmt_options {
 
 int main(int argc, char* argv[]) {
 	char line[MAX_LINE_LEN];
-	char words[MAX_WORDS][MAX_WORD_LEN];
-	int num_words = 0;
 	int num_chars;
 	fmt_options options = {0, 0, 0};
 
@@ -52,29 +48,26 @@ int main(int argc, char* argv[]) {
 		char *t;
 		t = strtok(line ," ");
 		while (t != NULL) {
-			//strncpy(words[num_words], t, MAX_WORD_LEN);
 	
 			// fxn? void update_options (fmt_options *options, char* word))
 			if (*t == '?') {
 				//printf("FORMAT ME!\n");
 				if (strncmp(t, "?pgwdth", 7) == 0) {
-					printf("FOUND PGWDTH\n");
 					t = strtok(NULL, " ");	
 					options.pgwdth = atoi(t);
+					options.fmt = 1;
+					//printf("FOUND PGWDTH\n");
 					//printf("%s %d", t, options.pgwdth);
-					options.fmt = 1;
 				} else if (strncmp(t, "?mrgn", 5) == 0) {
-					printf("FOUND MRGN\n");
-					// Temp value
-					options.mrgn = 20;
+					t = strtok(NULL, " ");	
+					options.mrgn = atoi(t);
+					//printf("FOUND MRGN\n");
 				} else if (strncmp(t, "?fmt on", 7) == 0) {
-					printf("FOUND FMT ON\n");
-					// Temp value
 					options.fmt = 1;
+					//printf("FOUND FMT ON\n");
 				} else if (strncmp(t, "?fmt off", 8) == 0) {
-					printf("FOUND FMT OFF\n");
-					// Temp value
 					options.fmt = 0;
+					//printf("FOUND FMT OFF\n");
 				}
 			} else {
 				if (options.fmt == 1) {
@@ -92,11 +85,9 @@ int main(int argc, char* argv[]) {
 			}
 			
 			t = strtok(NULL, " ");	
-			num_words++;
 		} /* end of tokenization loop */			
 		
 		/* reset words array before end of loop */
-		num_words = 0; 
 		
 	}
 
