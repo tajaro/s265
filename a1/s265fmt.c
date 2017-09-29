@@ -68,20 +68,22 @@ int main(int argc, char* argv[]) {
 				}
 			} else {
 				if (options.fmt == 1) {
+
 					num_chars += strlen(t) + 1;
 					if (num_chars >= options.pgwdth) {
 						//printf("%d %d", num_chars, options.pgwdth);
 						printf("\n");
 						num_chars = strlen(t);
 					}
+
 					if (*(t + sizeof(char)*(strlen(t)-1)) == '\n') {
 						*(t + sizeof(char)*(strlen(t)-1)) = '\0';
 					}
+
 					printf("%s ", t);
-					//t = strtok(NULL, " ");	
 				} else if (options.fmt == 0) {
 					// Implement me!
-					printf("FORMATTING IS OFF!\n");
+					printf("%s ", t);
 				}
 			}
 			
