@@ -1,13 +1,12 @@
 CC=gcc
-CFLAGS=
 
 DEPS = 
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< -ansi
 
 s265fmt: s265fmt.o
-	$(CC) -o $@ $^
+	$(CC) -o $@ $^ -ansi
 
 .PHONY: clean
 

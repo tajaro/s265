@@ -26,7 +26,7 @@ typedef struct fmt_options {
 
 int main(int argc, char* argv[]) {
 	char line[MAX_LINE_LEN];
-	int num_chars;
+	int num_chars = 0;
 	fmt_options options = {0, 0, 0};
 
 	if (argc != 2) {
@@ -44,7 +44,6 @@ int main(int argc, char* argv[]) {
 	
 		/* Need to tokenize to remove whitespace, improve '?' searching and
 		make formatting easier*/
-		// fxn? void tokenize_line(char *line, char *words))
 		char *t;
 		t = strtok(line ," ");
 		while (t != NULL) {
@@ -53,37 +52,39 @@ int main(int argc, char* argv[]) {
 					t = strtok(NULL, " ");	
 					options.pgwdth = atoi(t);
 					options.fmt = 1;
-					//printf("FOUND PGWDTH\n");
-					//printf("%s %d", t, options.pgwdth);
 				} else if (strncmp(t, "?mrgn", 5) == 0) {
 					t = strtok(NULL, " ");	
 					options.mrgn = atoi(t);
-					//printf("FOUND MRGN\n");
 				} else if (strncmp(t, "?fmt on", 7) == 0) {
 					options.fmt = 1;
-					//printf("FOUND FMT ON\n");
 				} else if (strncmp(t, "?fmt off", 8) == 0) {
 					options.fmt = 0;
-					//printf("FOUND FMT OFF\n");
 				}
 			} else {
 				if (options.fmt == 1) {
 
-					num_chars += strlen(t) + 1;
-					if (num_chars >= options.pgwdth) {
-						//printf("%d %d", num_chars, options.pgwdth);
+					/* if over page width, newline*/
+					num_chars += strlen(t);
+					if (num_chars > options.pgwdth) {
 						printf("\n");
 						num_chars = strlen(t);
 					}
+					
+					if ((num_chars-strlen(t)) == 0){
+					} else {
+						printf(" ");
+					}
+					num_chars++;
 
+					/* if eol, remove newline*/
 					if (*(t + sizeof(char)*(strlen(t)-1)) == '\n') {
 						*(t + sizeof(char)*(strlen(t)-1)) = '\0';
 					}
 
-					printf("%s ", t);
+					printf("%s", t);
 				} else if (options.fmt == 0) {
-					// Implement me!
-					printf("%s ", t);
+					/* Implement me! */
+					printf("%s", t);
 				}
 			}
 			
