@@ -10,24 +10,48 @@ September 2017
 
 #define MAX_LINE_LEN 100
 
-/*
-This struct records current options.
--1 indicates no option is selected 
+/* 0 indicates feature is off */
+int pgwdth = 0;
+/* Default is 0 */
+int mrgn = 0;
+/* "off" == 0. "on" == 1 */
+int fmt = 0;
+
+/* 	int update_operations (char*, char*)
+	Takes current token and checks the formatting operation. Updates global
+	variables pgwdth, mrgn, fmt accordingly. Returns 1 is successful, 0
+	otherwise.
+	Preconditions:
+		- Current token must start with a ?
 */
-typedef struct fmt_options {
-	/* 0 indicates feature is off */
-	int pgwdth;
-	/* Default is 0 */
-	int mrgn;
-	/* "off" == 0
-	   "on == 1 */
-	int fmt;
-} fmt_options;
+int update_options(char* line, char* t) {
+	if (strncmp(t, "?pgwdth", 6) == 0){
+		t = strtok(NULL, " ");	
+		pgwdth = atoi(t);
+		fmt = 1;
+	} else if (strncmp(t, "?mrgn", 4) == 0) {
+		t = strtok(NULL, " ");	
+		mrgn = atoi(t);
+	} else if (strncmp(t, "?fmt", 3) == 0) {
+		t = strtok(NULL, " ");	
+		if (strncmp(t, "on", 2) == 0) {
+			fmt = 1;
+		} else if (strncmp(t, "off", 3) == 0) {
+			fmt = 0;
+		} else {
+			printf("Something is very wrong\n");
+		}
+	} else {
+		return 0;
+	}
+	return 1;
+}
 
 int main(int argc, char* argv[]) {
 	char line[MAX_LINE_LEN];
 	int num_chars = 0;
-	fmt_options options = {0, 0, 0};
+	char *t;
+	char *val;
 
 	if (argc != 2) {
 		printf("Input file not specified\n");
@@ -44,52 +68,51 @@ int main(int argc, char* argv[]) {
 	
 		/* Need to tokenize to remove whitespace, improve '?' searching and
 		make formatting easier*/
-		char *t;
-		t = strtok(line ," \n");
+		t = strtok(line, " ");
 		while (t != NULL) {
-			if (*t == '?') {
-				if (strncmp(t, "?pgwdth", 7) == 0) {
+			if (fmt == 0) {
+				if (*t == '?') {
+					update_options(line, t);
+					t = strtok(NULL, " \n");
+					continue;
+				}
+				printf("%s", t);
+				t = strtok(NULL, "\n");
+				/*
+				t = strtok(NULL, " ");
+				if ( !update_options(line, t) == 0 ) {
+					printf("?%s", t);
+				}
+				*/
+			} else if (fmt == 1) {
+				if (*t == '?') {
+					update_options(line, t);
 					t = strtok(NULL, " \n");	
-					options.pgwdth = atoi(t);
-					options.fmt = 1;
-				} else if (strncmp(t, "?mrgn", 5) == 0) {
-					t = strtok(NULL, " ");	
-					options.mrgn = atoi(t);
-				} else if (strncmp(t, "?fmt on", 7) == 0) {
-					options.fmt = 1;
-				} else if (strncmp(t, "?fmt off", 8) == 0) {
-					options.fmt = 0;
-				}
-			} else {
-				if (options.fmt == 1) {
-
-					/* if over page width, newline*/
-					num_chars += strlen(t);
-					if (num_chars > options.pgwdth) {
-						printf("\n");
+				} else {
+					/* if over page width, newline and word*/
+					if ((num_chars+strlen(t)+1) > pgwdth) {
+						printf("\n%s", t);
 						num_chars = strlen(t);
+					/* if not start of line*/
+					} else if (num_chars != 0) {
+						printf(" %s", t);
+						num_chars += strlen(t) + 1;
+					/* if start of line*/
+					} else if (num_chars == 0) {
+						printf("%s", t);
+						num_chars = strlen(t);
+					} else {
+						printf("Something is very wrong\n");
 					}
-					
-					if ((num_chars-strlen(t)) != 0){
-						printf(" ");
-					}
-					num_chars++;
-
-					printf("%s", t);
-				} else if (options.fmt == 0) {
-					/* Implement me! */
-					printf("%s", t);
+					t = strtok(NULL, " \n");	
 				}
-			}
-			
-			t = strtok(NULL, " \n");	
-		} /* end of tokenization loop */			
+				
+			} /* end of tokenization loop */			
 		
-		/* reset words array before end of loop */
-		
+		}
 	}
 
-	if(options.fmt == 1) {
+	if(fmt == 1) {
 		printf("\n");
 	}
 

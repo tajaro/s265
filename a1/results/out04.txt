@@ -1,6 +1,10 @@
 While there are enough
-characters here to fill at
+characters here to fill
+ at
 least one line, there is
-plenty of white space that
-needs to be eliminated from
+plenty
+ of
+ white space that
+needs to be eliminated
+ from
 the original text file.
