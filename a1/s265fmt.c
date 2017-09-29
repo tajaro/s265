@@ -8,7 +8,9 @@ September 2017
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFLEN 100
+#define MAX_LINE_LEN 100
+#define MAX_WORD_LEN 20
+#define MAX_WORDS 100
 
 /*
 This struct records current options.
@@ -25,8 +27,9 @@ typedef struct fmt_options {
 } fmt_options;
 
 int main(int argc, char* argv[]) {
-	char buffer[BUFLEN];
-	char temp[3];
+	char line[MAX_LINE_LEN];
+	char words[MAX_WORDS][MAX_WORD_LEN];
+	int num_words = 0;
 	fmt_options options = {0, 0, 0};
 
 	if (argc != 2) {
@@ -40,9 +43,45 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 
-	while (fgets(buffer, sizeof(char)*BUFLEN, fp)) {
-		/* May not cover cases of ?fmt embedded in text */
-		if (buffer[0] == '?') {
+	while (fgets(line, sizeof(char)*MAX_LINE_LEN, fp)) {
+	
+		/* Need to tokenize to remove whitespace, improve '?' searching and
+		make formatting easier*/
+		// fxn? void tokenize_line(char *line, char *words))
+		char *t;
+		t = strtok(line ," ");
+		while (t != NULL) {
+			num_words++;
+			strncpy(words[num_words], t, MAX_WORD_LEN);
+			t = strtok(NULL, " ");
+			
+			// fxn? void update_options (fmt_options *options, char* word))
+			if (words[num_words][0] == '?') {
+				//printf("FORMAT ME!\n");
+				if (strncmp(words[num_words], "?pgwdth", 7) == 0) {
+					printf("FOUND PGWDTH\n");
+					// Temp value
+					options.pgwdth = 20;
+					options.fmt = 1;
+				} else if (strncmp(words[num_words], "?mrgn", 5) == 0) {
+					printf("FOUND MRGN\n");
+					// Temp value
+					options.mrgn = 20;
+				} else if (strncmp(words[num_words], "?fmt on", 7) == 0) {
+					printf("FOUND FMT ON\n");
+					// Temp value
+					options.fmt = 1;
+				} else if (strncmp(words[num_words], "?fmt off", 8) == 0) {
+					printf("FOUND FMT OFF\n");
+					// Temp value
+					options.fmt = 0;
+				}
+			}
+		}			
+
+		/*
+		// fxn? void update_options (fmt_options *options, char* line))
+		if (word[0] == '?') {
 			//printf("FORMAT ME!\n");
 			if (strncmp(buffer, "?pgwdth", 7) == 0) {
 				printf("FOUND PGWDTH\n");
@@ -63,7 +102,18 @@ int main(int argc, char* argv[]) {
 				options.fmt = 0;
 			}
 		}
-		printf("%s", buffer);
+		*/
+
+		// fxn? void format_line (fmt_options *options, char *buffer)
+		if (options.fmt = 1) {
+			if (options.pgwdth != 0) {
+				// Implement me!
+			} else if (options.mrgn != 0) {
+				// Implement me!
+			}
+		}
+		/* reset words array before end of loop */
+		num_words = 0; 
 	}
 
 	fclose(fp);
