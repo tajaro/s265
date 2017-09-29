@@ -45,11 +45,11 @@ int main(int argc, char* argv[]) {
 		/* Need to tokenize to remove whitespace, improve '?' searching and
 		make formatting easier*/
 		char *t;
-		t = strtok(line ," ");
+		t = strtok(line ," \n");
 		while (t != NULL) {
 			if (*t == '?') {
 				if (strncmp(t, "?pgwdth", 7) == 0) {
-					t = strtok(NULL, " ");	
+					t = strtok(NULL, " \n");	
 					options.pgwdth = atoi(t);
 					options.fmt = 1;
 				} else if (strncmp(t, "?mrgn", 5) == 0) {
@@ -76,11 +76,6 @@ int main(int argc, char* argv[]) {
 					}
 					num_chars++;
 
-					/* if eol, remove newline*/
-					if (*(t + sizeof(char)*(strlen(t)-1)) == '\n') {
-						*(t + sizeof(char)*(strlen(t)-1)) = '\0';
-					}
-
 					printf("%s", t);
 				} else if (options.fmt == 0) {
 					/* Implement me! */
@@ -88,7 +83,7 @@ int main(int argc, char* argv[]) {
 				}
 			}
 			
-			t = strtok(NULL, " ");	
+			t = strtok(NULL, " \n");	
 		} /* end of tokenization loop */			
 		
 		/* reset words array before end of loop */
