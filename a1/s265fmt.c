@@ -48,10 +48,7 @@ int main(int argc, char* argv[]) {
 		char *t;
 		t = strtok(line ," ");
 		while (t != NULL) {
-	
-			// fxn? void update_options (fmt_options *options, char* word))
 			if (*t == '?') {
-				//printf("FORMAT ME!\n");
 				if (strncmp(t, "?pgwdth", 7) == 0) {
 					t = strtok(NULL, " ");	
 					options.pgwdth = atoi(t);
@@ -71,13 +68,17 @@ int main(int argc, char* argv[]) {
 				}
 			} else {
 				if (options.fmt == 1) {
-					num_chars += strlen(t);
+					num_chars += strlen(t) + 1;
 					if (num_chars >= options.pgwdth) {
 						//printf("%d %d", num_chars, options.pgwdth);
 						printf("\n");
-						num_chars = 0;
+						num_chars = strlen(t);
+					}
+					if (*(t + sizeof(char)*(strlen(t)-1)) == '\n') {
+						*(t + sizeof(char)*(strlen(t)-1)) = '\0';
 					}
 					printf("%s ", t);
+					//t = strtok(NULL, " ");	
 				} else if (options.fmt == 0) {
 					// Implement me!
 					printf("FORMATTING IS OFF!\n");
