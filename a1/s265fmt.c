@@ -24,27 +24,30 @@ int fmt = 0;
 	Preconditions:
 		- Current token must start with a ?
 */
-int update_options(char* line, char* t) {
-	if (strncmp(t, "?pgwdth", 6) == 0){
-		t = strtok(NULL, " \n");	
+int update_options(char* line) {
+	
+	char* t;
+	t = strtok(line, " ");	
+
+	if (strncmp(line, "?pgwdth", 6) == 0){
+		t = strtok(NULL, " ");	
 		pgwdth = atoi(t);
 		fmt = 1;
-	} else if (strncmp(t, "?mrgn", 4) == 0) {
-		t = strtok(NULL, " \n");	
+	} else if (strncmp(line, "?mrgn", 4) == 0) {
+		t = strtok(NULL, " ");	
 		mrgn = atoi(t);
-	} else if (strncmp(t, "?fmt", 3) == 0) {
-		t = strtok(NULL, " \n");	
+	} else if (strncmp(line, "?fmt", 4) == 0) {
+		t = strtok(NULL, " ");	
 		if (strncmp(t, "on", 2) == 0) {
 			fmt = 1;
 		} else if (strncmp(t, "off", 3) == 0) {
 			fmt = 0;
-		} else {
-			printf("Something is very wrong\n");
 		}
 	} else {
 		return 0;
 	}
-	return 1;
+	/*printf("UPDATE: %d %d %d\n", pgwdth, mrgn, fmt);*/
+	return 0;
 }
 
 int main(int argc, char* argv[]) {
@@ -65,51 +68,67 @@ int main(int argc, char* argv[]) {
 	}
 
 	while (fgets(line, sizeof(char)*MAX_LINE_LEN, fp)) {
-	
-		/* Need to tokenize to remove whitespace, improve '?' searching and
-		make formatting easier*/
-		t = strtok(line, " \n");
-		while (t != NULL) {
-			if (fmt == 0) {
-				if (*t == '?') {
-					update_options(line, t);
-					t = strtok(NULL, " \n");
-					continue;
-				}
-				printf("%s", t);
-				t = strtok(NULL, "\n");
-			} else if (fmt == 1) {
-				if (*t == '?') {
-					update_options(line, t);
-					t = strtok(NULL, " \n");
-					continue;
-				}
-
-				/* if over page width, newline and word*/
-				if ((num_chars + strlen(t) + 1) > pgwdth) {
-					printf("\n%s", t);
-					num_chars = strlen(t);
-				/* if not start of line*/
-				} else if (num_chars != 0) {
-					printf(" %s", t);
-					num_chars += strlen(t) + 1;
-				/* if start of line*/
-				} else if (num_chars == 0) {
-					printf("%s", t);
-					num_chars = strlen(t);
-				} else {
-					printf("Something is very wrong\n");
-				}
-				t = strtok(NULL, " \n");	
+		
+		if (fmt == 0)
+		{
+			if (*line == '?')
+			{
+				update_options(line);
 			}
-				
-		} /* end of tokenization loop */			
-		if (fmt == 0) {
-			printf("\n");
+			else
+			{
+				printf("%s", line);
+			}
+		}
+		else
+		{
+			if (*line == '?')
+			{
+				update_options(line);
+			}
+			else if (*line == '\n')
+			{
+				if (num_chars != 0) {
+					printf("\n");
+					num_chars = 0;
+				}
+				printf("\n");
+			}
+			else
+			{
+				t = strtok(line, " \n");
+				while (t != NULL)
+				{
+					/* if over page width, newline and word*/
+					if ((num_chars + strlen(t) + 1) > pgwdth)
+					{
+						printf("\n");
+						num_chars = 0;
+					} 
+					/* if not start of line*/
+					else if (num_chars != 0)
+					{
+						printf(" ");
+						num_chars++;
+					}
+
+					/* if start of line*/
+					if (num_chars == 0)
+					{
+						/* add margin */
+						for( ;num_chars < mrgn; num_chars++)
+						{
+							printf(" ");
+						}
+					}
+					printf("%s", t);
+					num_chars += strlen(t);
+					t = strtok(NULL, " \n");	
+				}	
+			}		
 		}
 	}
 	
-
 	if(fmt == 1) {
 		printf("\n");
 	}
