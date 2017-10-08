@@ -17,13 +17,6 @@ int mrgn = 0;
 /* "off" == 0. "on" == 1 */
 int fmt = 0;
 
-/* 	int update_operations (char*, char*)
-	Takes current token and checks the formatting operation. Updates global
-	variables pgwdth, mrgn, fmt accordingly. Returns 1 is successful, 0
-	otherwise.
-	Preconditions:
-		- Current token must start with a ?
-*/
 int update_options(char* line) {
 	
 	char* t;
@@ -136,5 +129,4 @@ int main(int argc, char* argv[]) {
 	fclose(fp);
 	return 0;
 }
-
 

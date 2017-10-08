@@ -3,12 +3,12 @@ CC=gcc
 DEPS = 
 
 %.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< -ansi
+	$(CC) -c -o bin/$@ $< -ansi
 
 s265fmt: s265fmt.o
-	$(CC) -o $@ $^ -ansi
+	$(CC) -o bin/$@ bin/$^ -ansi
 
 .PHONY: clean
 
 clean:
-	rm *.o s265fmt
+	rm bin/*.o bin/s265fmt
