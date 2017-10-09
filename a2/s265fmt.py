@@ -72,7 +72,7 @@ def main():
 					if not fmt_line:
 						fmt_line = fmt_line.rjust(mrgn)
 					fmt_line += word
-	if fmt == 1:
+	if fmt == 1 and fmt_line:
 		print(fmt_line)
 	fp.close()
 
