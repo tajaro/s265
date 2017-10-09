@@ -13,10 +13,13 @@ def update_options(line):
 		fmt = 1
 		li = line.split(' ')
 		pgwdth = int(li[1])
-	if line.startswith("?mrgn"):
+	elif line.startswith("?mrgn"):
 		li = line.split(' ')
 		mrgn = int(li[1])
-	if line.startswith("?fmt"):
+	elif line.startswith("+mrgn"):
+		li = line.split(' ')
+		mrgn += int(li[1])
+	elif line.startswith("?fmt"):
 		li = line.split(' ')
 		if li[1].startswith('on'):
 			fmt = 1
@@ -35,22 +38,21 @@ def main():
 
 	fp = open(file=args.filename, mode="r")
 	
-	num_chars = 0
 	fmt_line = ''
 	
 	contents = fp.readlines()
 	for line in contents:
 		line = line.rstrip()
 		if fmt == 0:
-			if line.startswith('?'):
+			if line.startswith(('?','+')):
 				update_options(line)
 			else:
 				print(line)
 		elif fmt == 1:
-			if line.startswith('?'):
+			if line.startswith(('?','+')):
 				update_options(line)
 			elif not line:
-				if num_chars != 0:
+				if fmt_line:
 					print(fmt_line)
 					fmt_line = ''
 					num_chars = 0	
@@ -58,18 +60,14 @@ def main():
 			else:
 				words = line.split()
 				for word in words:
-					if (num_chars + len(word) + 1) > pgwdth:
+					if (len(fmt_line) + len(word) + 1) > pgwdth:
 						print(fmt_line)
 						fmt_line = ''
-						num_chars = 0
-					if num_chars == 0:
+					elif fmt_line:
+						fmt_line += ' '
+					if not fmt_line:
 						fmt_line = fmt_line.rjust(mrgn)
-						fmt_line += word
-						num_chars += mrgn
-					else:
-						fmt_line += (' ' + word)
-						num_chars += 1
-					num_chars += len(word)
+					fmt_line += word
 	if fmt == 1:
 		print(fmt_line)
 	fp.close()

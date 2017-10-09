@@ -7,8 +7,8 @@
      The room is luxuriously and artistically furnished. The
      sound of a piano is heard in the adjoining room.
 
-[Lane is arranging afternoon tea on the table, and after the music has
-ceased, Algernon enters.]
+[Lane is arranging afternoon tea on the table, and after the
+music has ceased, Algernon enters.]
 
      Algernon. Did you hear what I was playing, Lane?
 
@@ -76,7 +76,7 @@ ceased, Algernon enters.]
 
 [Enter Jack.]
 
-[Lanegoes out_._]
+[Lane goes out_._]
 
      Algernon. How are you, my dear Ernest? What brings you
      up to town?
@@ -208,8 +208,8 @@ ceased, Algernon enters.]
      Jack. There is no good offering a large reward now that
      the thing is found.
 
-[Enter Lane with the cigarette case on a salver. Algernon takes
-it atonce.Lane goes out.]
+[Enter Lane with the cigarette case on a salver. Algernon
+takes it at once. Lane goes out.]
 
      Algernon. I think that is rather mean of you, Ernest, I
      must say. [Opens case and examines it.] However, it
@@ -454,8 +454,8 @@ it atonce.Lane goes out.]
 
      Lane. Lady Bracknell and Miss Fairfax.
 
-[Algernon goes forward to meet them. Enter Lady Bracknell and
-Gwendolen.]
+[Algernon goes forward to meet them. Enter Lady Bracknell
+and Gwendolen.]
 
      Lady Bracknell. Good afternoon, dear Algernon, I hope
      you are behaving very well.
@@ -586,8 +586,8 @@ Gwendolen.]
 
      Gwendolen. Certainly, mamma.
 
-[LadyBracknell and Algernon go into the music-room, Gwendolen remains
-behind.]
+[Lady Bracknell and Algernon go into the music-room,
+Gwendolen remains behind.]
 
      Jack. Charming day it has been, Miss Fairfax.
 
@@ -933,7 +933,7 @@ behind.]
      form an alliance with a parcel? Good morning, Mr.
      Worthing!
 
-[LadyBracknell sweeps out in majestic indignation.]
+[Lady Bracknell sweeps out in majestic indignation.]
 
      Jack. Good morning! [Algernon, from the other room,
      strikes up the Wedding March. Jack looks perfectly
@@ -1166,9 +1166,9 @@ behind.]
 
      Lane. Yes, sir. [Jack and Gwendolen go off.]
 
-[Lanepresents several letters on a salver to Algernon. It is to be
-surmised that they are bills, as Algernon, after looking at the
-envelopes, tears them up.]
+[Lane presents several letters on a salver to Algernon. It
+is to be surmised that they are bills, as Algernon, after
+looking at the envelopes, tears them up.]
 
      Algernon. A glass of sherry, Lane.
 
@@ -1212,7 +1212,8 @@ envelopes, tears them up.]
 
      Algernon. Nobody ever does.
 
-[Jacklooksindignantly at him, and leaves the room. Algernon lights a
-cigarette, reads his shirt-cuff, and smiles.]
+[Jack looks indignantly at him, and leaves the room.
+Algernon lights a cigarette, reads his shirt-cuff, and
+smiles.]
 
           ACT DROP
