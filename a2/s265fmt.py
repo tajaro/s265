@@ -15,10 +15,14 @@ def update_options(line):
 		pgwdth = int(li[1])
 	elif line.startswith("?mrgn"):
 		li = line.split(' ')
-		mrgn = int(li[1])
-	elif line.startswith("+mrgn"):
-		li = line.split(' ')
-		mrgn += int(li[1])
+		if li[1].startswith(('+', '-')):
+			mrgn += int(li[1])
+		else:
+			mrgn = int(li[1])
+		if mrgn < 0:
+			mrgn = 0
+		elif mrgn > (pgwdth - 20):
+			mrgn = pgwdth - 20
 	elif line.startswith("?fmt"):
 		li = line.split(' ')
 		if li[1].startswith('on'):
@@ -44,12 +48,12 @@ def main():
 	for line in contents:
 		line = line.rstrip()
 		if fmt == 0:
-			if line.startswith(('?','+')):
+			if line.startswith('?'):
 				update_options(line)
 			else:
 				print(line)
-		elif fmt == 1:
-			if line.startswith(('?','+')):
+		else:
+			if line.startswith('?'):
 				update_options(line)
 			elif not line:
 				if fmt_line:
