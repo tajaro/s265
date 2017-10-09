@@ -47,15 +47,13 @@ def main():
 	contents = fp.readlines()
 	for line in contents:
 		line = line.rstrip()
+		if line.startswith('?'):
+			update_options(line)
+			continue
 		if fmt == 0:
-			if line.startswith('?'):
-				update_options(line)
-			else:
-				print(line)
+			print(line)
 		else:
-			if line.startswith('?'):
-				update_options(line)
-			elif not line:
+			if not line:
 				if fmt_line:
 					print(fmt_line)
 					fmt_line = ''
