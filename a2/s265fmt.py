@@ -3,20 +3,25 @@
 import argparse
 import sys
 
-def update_options(line, fmt, pgwdth, mrgn):
+fmt = 0
+pgwdth = 0
+mrgn = 0
+
+def update_options(line):
+	global fmt, pgwdth, mrgn
 	if line.startswith("?pgwdth"):	
-		fmt = 'on'
+		fmt = 1
 		li = line.split(' ')
-		pgwdth = li[1]
+		pgwdth = int(li[1])
 	if line.startswith("?mrgn"):
 		li = line.split(' ')
-		mrgn = li[1]
+		mrgn = int(li[1])
 	if line.startswith("?fmt"):
 		li = line.split(' ')
-		if li[1] is 'on':
-			fmt = 'on'
-		elif li[1] is 'off':
-			fmt = 'off'
+		if li[1].startswith('on'):
+			fmt = 1
+		elif li[1].startswith('off'):
+			fmt = 0
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -30,24 +35,42 @@ def main():
 
 	fp = open(file=args.filename, mode="r")
 	
-	contents = fp.readlines()
-
-	fmt = 'off'
-	pgwdth = 0
-	mrgn = 0
-
-	for line in contents:
-		if fmt is 'off':
-			if line.startswith('?'):
-				update_options(line, fmt, pgwdth, mrgn)
-			else:
-				print(line, end = "")
-		elif fmt is 'on':
-			if line.startswith('?'):
-				update_options(line, fmt, pgwdth, mrgn)
-			else:
-				pass
+	num_chars = 0
+	fmt_line = ''
 	
+	contents = fp.readlines()
+	for line in contents:
+		line = line.rstrip()
+		if fmt is 0:
+			if line.startswith('?'):
+				update_options(line)
+			else:
+				print(line)
+		elif fmt is 1:
+			if line.startswith('?'):
+				update_options(line)
+			elif line.startswith('\n'):
+				if num_chars is not 0:
+					print('\n')
+					fmt_line = ''
+					num_chars = 0	
+				print('\n')
+			else:
+				words = line.split()
+				for word in words:
+					if (num_chars + len(word)) >= pgwdth:
+						print(fmt_line)
+						fmt_line = ''
+						num_chars = 0
+					if num_chars is 0:
+						fmt_line = fmt_line.rjust(mrgn)
+						fmt_line += word
+					else:
+						fmt_line += (' ' + word)
+						num_chars += 1
+					num_chars += len(word)
+	if fmt is 1:
+		print(fmt_line)
 	fp.close()
 
 if __name__ == "__main__":
