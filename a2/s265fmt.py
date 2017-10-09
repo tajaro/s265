@@ -41,35 +41,36 @@ def main():
 	contents = fp.readlines()
 	for line in contents:
 		line = line.rstrip()
-		if fmt is 0:
+		if fmt == 0:
 			if line.startswith('?'):
 				update_options(line)
 			else:
 				print(line)
-		elif fmt is 1:
+		elif fmt == 1:
 			if line.startswith('?'):
 				update_options(line)
-			elif line.startswith('\n'):
-				if num_chars is not 0:
-					print('\n')
+			elif not line:
+				if num_chars != 0:
+					print(fmt_line)
 					fmt_line = ''
 					num_chars = 0	
-				print('\n')
+				print('')
 			else:
 				words = line.split()
 				for word in words:
-					if (num_chars + len(word)) >= pgwdth:
+					if (num_chars + len(word) + 1) > pgwdth:
 						print(fmt_line)
 						fmt_line = ''
 						num_chars = 0
-					if num_chars is 0:
+					if num_chars == 0:
 						fmt_line = fmt_line.rjust(mrgn)
 						fmt_line += word
+						num_chars += mrgn
 					else:
 						fmt_line += (' ' + word)
 						num_chars += 1
 					num_chars += len(word)
-	if fmt is 1:
+	if fmt == 1:
 		print(fmt_line)
 	fp.close()
 
