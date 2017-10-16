@@ -21,10 +21,11 @@ class seng265_formatter:
 			self.lines = lines
 
 		self.output = []
+		self.format_lines()
 
 	def update_options(self, line):
 		"""
-		Update self.opts with newfound formatting option.
+		Update self.opt with newfound formatting option.
 		"""
 		if line.startswith("?pgwdth"):	
 			self.opt['fmt'] = 1
@@ -46,11 +47,10 @@ class seng265_formatter:
 				self.opt['fmt']
 			elif li[1].startswith('off'):
 				self.opt['fmt']
-	
 
 	def format_lines(self):
 		"""
-		Call parse_line repeatedly until entire input formatted
+		Format input lines.
 		"""
 		fmt_line = ''
 	
@@ -85,10 +85,9 @@ class seng265_formatter:
 		if self.opt['fmt'] == 1 and fmt_line:
 			self.output.append(fmt_line)
 
-		#self.output = self.lines
-
-
-
 	def getlines(self):
+		"""
+		Return formatted lines.
+		"""
 		return self.output		
 

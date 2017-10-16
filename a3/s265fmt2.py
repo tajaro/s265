@@ -15,7 +15,6 @@ def main():
 		sys.exit(1)
 
 	myobj = seng265_formatter(filename=args.filename)
-	myobj.format_lines()
 	
 	for line in myobj.getlines() :
 		print(line)
