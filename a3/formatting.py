@@ -2,8 +2,10 @@
 
 class seng265_formatter:
 
-	def __init__(self, filename="", lines=[]):
-		
+	def __init__(self, filename="", inputlines=[]):
+		"""
+		Takes filename or list and formats
+		"""
 		self.opt = {
 			'fmt' : False,
 			'pgwdth' : 0,
@@ -14,7 +16,7 @@ class seng265_formatter:
 			inputfile = open(filename, 'r')
 			self.lines = inputfile.readlines()
 		else:
-			self.lines = lines
+			self.lines = inputlines
 
 		self.output = []
 		self.format_lines()
@@ -49,7 +51,7 @@ class seng265_formatter:
 		Format input lines.
 		"""
 		fmt_line = ''
-	
+
 		for line in self.lines:
 
 			line = line.rstrip()
@@ -81,7 +83,7 @@ class seng265_formatter:
 		if self.opt['fmt'] == 1 and fmt_line:
 			self.output.append(fmt_line)
 
-	def getlines(self):
+	def get_lines(self):
 		"""
 		Return formatted lines.
 		"""
