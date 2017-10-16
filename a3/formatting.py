@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
 class seng265_formatter:
-
+	"""A class representing a formatted text file"""
+	
 	def __init__(self, filename="", inputlines=[]):
-		"""
-		Takes filename or list and formats
-		"""
+		"""Takes filename or list and formats"""
 		self.opt = {
 			'fmt' : False,
 			'pgwdth' : 0,
@@ -22,9 +21,7 @@ class seng265_formatter:
 		self.format_lines()
 
 	def update_options(self, line):
-		"""
-		Update self.opt with newfound formatting option.
-		"""
+		"""Update self.opt with newfound formatting option."""
 		if line.startswith("?pgwdth"):	
 			self.opt['fmt'] = 1
 			li = line.split(' ')
@@ -47,9 +44,7 @@ class seng265_formatter:
 				self.opt['fmt'] = 0
 
 	def format_lines(self):
-		"""
-		Format input lines.
-		"""
+		"""Format input lines."""
 		fmt_line = ''
 
 		for line in self.lines:
@@ -84,8 +79,6 @@ class seng265_formatter:
 			self.output.append(fmt_line)
 
 	def get_lines(self):
-		"""
-		Return formatted lines.
-		"""
+		"""Return formatted lines."""
 		return self.output		
 
