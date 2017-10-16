@@ -218,10 +218,14 @@ He who is only a good man that men may know it, and that he may be the better
 esteemed when 'tis known; who will not do well but upon condition that his
 virtue may be known to men: is one from whom much service is not to be expected:
 
-"Credo ch 'el reste di quel verno, cose Facesse degne di tener ne conto; Ma fur
-fin' a quel tempo si nascose, Che non a colpa mia s' hor 'non le conto Perche
-Orlando a far l'opre virtuose Piu ch'a narrar le poi sempre era pronto; Ne mai
-fu alcun' de'suoi fatti espresso, Se non quando ebbe i testimonii appresso."
+              "Credo ch 'el reste di quel verno, cose
+               Facesse degne di tener ne conto;
+               Ma fur fin' a quel tempo si nascose,
+               Che non a colpa mia s' hor 'non le conto
+               Perche Orlando a far l'opre virtuose
+               Piu ch'a narrar le poi sempre era pronto;
+               Ne mai fu alcun' de'suoi fatti espresso,
+               Se non quando ebbe i testimonii appresso."
 
      ["The rest of the winter, I believe, was spent in actions worthy of
      narration, but they were done so secretly that if I do not tell them I am
@@ -236,8 +240,10 @@ doing well. A man must be valiant for himself, and upon account of the advantage
 it is to him to have his courage seated in a firm and secure place against the
 assaults of fortune:
 
-"Virtus, repulsaa nescia sordidx Intaminatis fulget honoribus Nec sumit, aut
-ponit secures Arbitrio popularis aura."
+                   "Virtus, repulsaa nescia sordidx
+                    Intaminatis fulget honoribus
+                    Nec sumit, aut ponit secures
+                    Arbitrio popularis aura."
 
      ["Virtue, repudiating all base repulse, shines in taintless honours, nor
      takes nor leaves dignity at the mere will of the vulgar."--Horace, Od.,

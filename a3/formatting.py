@@ -10,10 +10,6 @@ class seng265_formatter:
 			'mrgn' : 0
 		}
 
-		self.state = {
-			'line_no' : 0
-		}
-
 		if filename:
 			inputfile = open(filename, 'r')
 			self.lines = inputfile.readlines()
@@ -44,9 +40,9 @@ class seng265_formatter:
 		elif line.startswith("?fmt"):
 			li = line.split(' ')
 			if li[1].startswith('on'):
-				self.opt['fmt']
+				self.opt['fmt'] = 1
 			elif li[1].startswith('off'):
-				self.opt['fmt']
+				self.opt['fmt'] = 0
 
 	def format_lines(self):
 		"""
