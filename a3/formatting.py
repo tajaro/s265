@@ -4,15 +4,14 @@ class seng265_formatter:
 
 	def __init__(self, filename="", lines=[]):
 		
-		self.opts = {
+		self.opt = {
 			'fmt' : False,
 			'pgwdth' : 0,
 			'mrgn' : 0
 		}
 
 		self.state = {
-			'line_no' : 0,
-			'char_no' : 0
+			'line_no' : 0
 		}
 
 		if filename:
@@ -23,11 +22,72 @@ class seng265_formatter:
 
 		self.output = []
 
-	def update_options(self):
-		pass
+	def update_options(self, line):
+		"""
+		Update self.opts with newfound formatting option.
+		"""
+		if line.startswith("?pgwdth"):	
+			self.opt['fmt'] = 1
+			li = line.split(' ')
+			self.opt['pgwdth'] = int(li[1])
+		elif line.startswith("?mrgn"):
+			li = line.split(' ')
+			if li[1].startswith(('+', '-')):
+				self.opt['mrgn'] += int(li[1])
+			else:
+				self.opt['mrgn'] = int(li[1])
+			if self.opt['mrgn'] < 0:
+				self.opt['mrgn'] = 0
+			elif self.opt['mrgn'] > (self.opt['pgwdth']  - 20):
+				self.opt['mrgn'] = self.opt['pgwdth'] - 20
+		elif line.startswith("?fmt"):
+			li = line.split(' ')
+			if li[1].startswith('on'):
+				self.opt['fmt']
+			elif li[1].startswith('off'):
+				self.opt['fmt']
 	
+
 	def format_lines(self):
-		self.output = self.lines
+		"""
+		Call parse_line repeatedly until entire input formatted
+		"""
+		fmt_line = ''
+	
+		for line in self.lines:
+
+			line = line.rstrip()
+
+			if line.startswith('?'):
+				self.update_options(line)
+				continue
+
+			if self.opt['fmt'] == 0:
+				self.output.append(line)				
+			else:
+				if not line:
+					if fmt_line:
+						self.output.append(fmt_line)
+						fmt_line = ''
+					self.output.append('')
+				else:
+					words = line.split()
+					for word in words:
+						if (len(fmt_line) + len(word) + 1) > self.opt['pgwdth']:
+							self.output.append(fmt_line)
+							fmt_line = ''
+						elif fmt_line:
+							fmt_line += ' '
+						if not fmt_line:
+							fmt_line = fmt_line.rjust(self.opt['mrgn'])
+						fmt_line += word
+		
+		if self.opt['fmt'] == 1 and fmt_line:
+			self.output.append(fmt_line)
+
+		#self.output = self.lines
+
+
 
 	def getlines(self):
 		return self.output		

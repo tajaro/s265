@@ -17,7 +17,8 @@ def main():
 	myobj = seng265_formatter(filename=args.filename)
 	myobj.format_lines()
 	
-	print(myobj.getlines())
+	for line in myobj.getlines() :
+		print(line)
 
 if __name__ == "__main__":
 	main()
