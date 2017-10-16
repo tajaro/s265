@@ -2,7 +2,7 @@
 
 class seng265_formatter:
 
-	def __init__(self, filename, lines):
+	def __init__(self, filename="", lines=[]):
 		
 		self.opts = {
 			'fmt' : False,

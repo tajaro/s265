@@ -14,8 +14,10 @@ def main():
 		print('No file specified')
 		sys.exit(1)
 
-	#seng265_formatter(
-	print ("Hello World")
+	myobj = seng265_formatter(filename=args.filename)
+	myobj.format_lines()
+	
+	print(myobj.getlines())
 
 if __name__ == "__main__":
 	main()
